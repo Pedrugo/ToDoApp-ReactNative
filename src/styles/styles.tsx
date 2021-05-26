@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: '#bbdefb',
+        display: 'flex',
         flex: 1,
     },
     formContainer: {
@@ -50,5 +51,16 @@ export const styles = StyleSheet.create({
         flex: 1,
         margin: 50,
         width: wp('90%')
+    },
+    jokeContainer: {
+        borderRadius: 10,
+        backgroundColor: '#2196f3',
+        marginHorizontal: 30,
+    },
+    jokeText: {
+        color: 'white',
+        fontSize: 20,
+        margin: 10,
+        marginHorizontal: 30
     }
 });

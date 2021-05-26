@@ -4,7 +4,7 @@ import { styles } from '../styles/styles';
 
 import { AppHeader } from '../components/AppHeader';
 import { TodoForm } from '../components/AddTodoForm';
-import { useJokesApi } from '../hooks/useJokesApi';
+import { useJokesApi } from '../hooks/useJokeApi';
 
 export const AddTodo = () => {
 
@@ -15,8 +15,10 @@ export const AddTodo = () => {
             <ScrollView>
                 <AppHeader />
                 <TodoForm />
-                <Text>{setup}</Text>
-                <Text>{punchline}</Text>
+                <View style={styles.jokeContainer}>
+                    <Text style={styles.jokeText}>{setup}</Text>
+                    <Text style={styles.jokeText}>{punchline}</Text>
+                </View>
             </ScrollView>
         </View>
     );
