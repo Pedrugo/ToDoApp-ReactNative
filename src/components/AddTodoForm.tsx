@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { format } from 'date-fns';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Alert } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -13,6 +13,7 @@ import { styles } from '../styles/styles';
 import { Todo } from '../interfaces/todo';
 import { addNewTodo, getAllTodos } from '../redux/actions/todo';
 import { setOpenDataPicker, setSelectedDate } from '../redux/actions/datePicker';
+import { todoFormValidator } from '../helpers/todoFormValidator';
 
 export const TodoForm = () => {
 
@@ -28,6 +29,13 @@ export const TodoForm = () => {
         dispatch(addNewTodo(values));
         dispatch(setSelectedDate(''));
         dispatch(getAllTodos());
+        Alert.alert('To do Added', 'You can see the todo added on press PendingTodo', [
+            {
+                text: 'Close', onPress: () => {
+                    return;
+                }
+            }
+        ]);
     };
 
     return (
@@ -40,18 +48,22 @@ export const TodoForm = () => {
                 modificationDate: ''
             }}
             onSubmit={
-                (values) => handleTodoSubmit(
-                    {
-                        ...values,
-                        uuid: uuidv4(),
-                        creationDate: format(new Date(), 'dd/MM/yyyy'),
-                        deadline: selectedDate ? selectedDate : values.deadline,
-                        done: false,
-                    }
-                )
+                (values, { resetForm }) => {
+                    handleTodoSubmit(
+                        {
+                            ...values,
+                            uuid: uuidv4(),
+                            creationDate: format(new Date(), 'dd/MM/yyyy'),
+                            deadline: selectedDate ? selectedDate : values.deadline,
+                            done: false,
+                        },
+                    );
+                    resetForm();
+                }
             }
+            validationSchema={todoFormValidator}
         >
-            {({ values, handleChange, handleSubmit }) => (
+            {({ values, handleChange, handleSubmit, errors, touched }) => (
 
                 <View style={styles.formContainer}>
 
@@ -62,6 +74,15 @@ export const TodoForm = () => {
                         value={values.title}
                         onChangeText={handleChange('title')}
                     />
+
+                    <View style={styles.inputErrorContainer}>
+                        {
+                            errors.title && touched.title && (
+                                <Text style={styles.inputErrorText}>* {errors.title}</Text>
+                            )
+                        }
+                    </View>
+
                     <Input
                         style={styles.input}
                         placeholder="Todo Description"
@@ -70,6 +91,14 @@ export const TodoForm = () => {
                         value={values.description}
                         onChangeText={handleChange('description')}
                     />
+
+                    <View style={styles.inputErrorContainer}>
+                        {
+                            errors.description && touched.description && (
+                                <Text style={styles.inputErrorText}>* {errors.description}</Text>
+                            )
+                        }
+                    </View>
 
                     <Text style={styles.textOnInput}>Deadline</Text>
 
@@ -97,13 +126,13 @@ export const TodoForm = () => {
                                 display="default"
                                 onConfirm={(date) => handleChangeDatePicker(format(date, 'dd/MM/yyyy'))}
                                 onCancel={() => dispatch(setOpenDataPicker(false))}
+
                             />
                         )
 
                     }
-
                     <Button
-                        buttonStyle={styles.formButton}
+                        buttonStyle={{ ...styles.formButton, width: 100 }}
                         title="Add Todo"
                         onPress={handleSubmit}
                     />

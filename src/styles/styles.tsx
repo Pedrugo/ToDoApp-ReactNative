@@ -25,6 +25,8 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: '#2196f3',
         borderRadius: 10,
+        margin: 10,
+        width: wp('20%'),
     },
     card: {
         borderRadius: 10,
@@ -45,6 +47,10 @@ export const styles = StyleSheet.create({
         marginTop: 30,
         width: wp('25%'),
     },
+    editButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
     overlay: {
         backgroundColor: '#bbdefb',
         borderRadius: 10,
@@ -55,12 +61,25 @@ export const styles = StyleSheet.create({
     jokeContainer: {
         borderRadius: 10,
         backgroundColor: '#2196f3',
+        height: hp('20%'),
         marginHorizontal: 30,
+        left: 10,
+        width: wp('80%')
     },
     jokeText: {
         color: 'white',
         fontSize: 20,
         margin: 10,
         marginHorizontal: 30
+    },
+    inputErrorContainer: {
+        height: hp('3%'),
+        marginTop: -20,
+        marginBottom: 20,
+        paddingHorizontal: 10,
+    },
+    inputErrorText: {
+        color: '#ff5722',
+        fontSize: 14
     }
 });

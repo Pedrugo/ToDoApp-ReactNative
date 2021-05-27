@@ -1,7 +1,6 @@
 import { Todo } from '../../interfaces/todo';
 import { addTodo, deleteTodo, queryAllTodos, changeStatus, queyUpdateTodo } from '../../database/services/todo.service';
 
-
 export const newTodo = () => {
     return {
         type: 'ADD_TODO',

@@ -11,6 +11,7 @@ import { styles } from '../styles/styles';
 import { setOpenDataPicker, setSelectedDate } from '../redux/actions/datePicker';
 import { Todo } from '../interfaces/todo';
 import { getAllTodos, updateTodo } from '../redux/actions/todo';
+import { todoFormValidator } from '../helpers/todoFormValidator';
 
 export const EditTodoForm = () => {
 
@@ -57,8 +58,9 @@ export const EditTodoForm = () => {
                             }
                         )
                     }
+                    validationSchema={todoFormValidator}
                 >
-                    {({ values, handleChange, handleSubmit }) => (
+                    {({ values, handleChange, handleSubmit, errors, touched }) => (
 
                         <View style={styles.formContainer}>
 
@@ -69,6 +71,15 @@ export const EditTodoForm = () => {
                                 value={values.title}
                                 onChangeText={handleChange('title')}
                             />
+
+                            <View style={styles.inputErrorContainer}>
+                                {
+                                    errors.title && touched.title && (
+                                        <Text style={styles.inputErrorText}>* {errors.title}</Text>
+                                    )
+                                }
+                            </View>
+
                             <Input
                                 style={styles.input}
                                 placeholder="Todo Description"
@@ -77,6 +88,14 @@ export const EditTodoForm = () => {
                                 value={values.description}
                                 onChangeText={handleChange('description')}
                             />
+
+                            <View style={styles.inputErrorContainer}>
+                                {
+                                    errors.description && touched.description && (
+                                        <Text style={styles.inputErrorText}>* {errors.description}</Text>
+                                    )
+                                }
+                            </View>
 
                             <Text style={styles.textOnInput}>Deadline</Text>
 
@@ -108,12 +127,21 @@ export const EditTodoForm = () => {
                                 )
 
                             }
-
-                            <Button
-                                buttonStyle={styles.formButton}
-                                title="Save"
-                                onPress={handleSubmit}
-                            />
+                            <View style={styles.editButtonContainer}>
+                                <Button
+                                    buttonStyle={styles.formButton}
+                                    title="Save"
+                                    onPress={handleSubmit}
+                                />
+                                <Button
+                                    buttonStyle={{ ...styles.formButton, backgroundColor: '#ff5722' }}
+                                    title="Cancel"
+                                    onPress={() => {
+                                        dispatch(setOpenOverlay(false));
+                                        dispatch(setSelectedDate(''));
+                                    }}
+                                />
+                            </View>
 
                         </View>
                     )}

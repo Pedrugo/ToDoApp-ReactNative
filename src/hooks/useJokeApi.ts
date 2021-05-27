@@ -9,6 +9,7 @@ export const useJokesApi = () => {
         type: '',
         setup: '',
         punchline: '',
+        isLoading: true,
     });
 
     const getJoke = async () => {
@@ -18,7 +19,8 @@ export const useJokesApi = () => {
             id: response.data.id,
             type: response.data.type,
             setup: response.data.setup,
-            punchline: response.data.punchline
+            punchline: response.data.punchline,
+            isLoading: false
         });
     };
 

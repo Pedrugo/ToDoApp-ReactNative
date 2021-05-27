@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import { styles } from '../styles/styles';
 import { getAllTodos, removeTodo, updateStatus } from '../redux/actions/todo';
@@ -11,8 +11,19 @@ export const TodoCard = ({ todo }: any) => {
     const dispatch = useDispatch();
 
     const handleRemoveTodo = (uuid: string) => {
-        dispatch(removeTodo(uuid));
-        dispatch(getAllTodos());
+        Alert.alert('Warning', 'Are you sure do you want remove todo?', [
+            {
+                text: 'Yes', onPress: () => {
+                    dispatch(removeTodo(uuid));
+                    dispatch(getAllTodos());
+                }
+            },
+            {
+                text: 'No', onPress: () => {
+                    return;
+                }
+            }
+        ]);
     };
 
     const handleChangeStatus = (uuid: string) => {

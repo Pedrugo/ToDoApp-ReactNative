@@ -1,24 +1,23 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { styles } from '../styles/styles';
-
 import { AppHeader } from '../components/AppHeader';
 import { TodoForm } from '../components/AddTodoForm';
-import { useJokesApi } from '../hooks/useJokeApi';
+import { JokeCard } from '../components/JokeCard';
+import { useConnected } from '../hooks/useConnected';
 
 export const AddTodo = () => {
 
-    const { setup, punchline } = useJokesApi();
+    const { connected } = useConnected();
 
     return (
         <View style={styles.container}>
             <ScrollView>
                 <AppHeader />
                 <TodoForm />
-                <View style={styles.jokeContainer}>
-                    <Text style={styles.jokeText}>{setup}</Text>
-                    <Text style={styles.jokeText}>{punchline}</Text>
-                </View>
+                {
+                    connected && <JokeCard />
+                }
             </ScrollView>
         </View>
     );

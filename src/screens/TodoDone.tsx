@@ -21,7 +21,6 @@ export const TodoDone = () => {
     return (
         <>
             <AppHeader />
-
             <ScrollView style={styles.container}>
                 {
                     todoList.map((todo: Todo) => todo.done && <TodoCard key={todo.uuid} todo={todo} />)
