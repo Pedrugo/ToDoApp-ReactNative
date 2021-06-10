@@ -1,10 +1,9 @@
 import Realm from 'realm';
-import { TodoSchema } from './models/todo.model';
-
+import {TodoSchema} from './models/todo.model';
 
 export const realmConfig = {
-    path: 'TodoRealm',
-    schema: [TodoSchema]
+  path: 'TodoRealm',
+  schema: [TodoSchema],
 };
 
 export default new Realm(realmConfig);

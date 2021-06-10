@@ -1,27 +1,27 @@
+import {Todo} from '../../interfaces/todo';
 
-import { Todo } from '../../interfaces/todo';
-
-export type TodoActions =
-    | { type: 'TODO_LIST', payload: any }
+export type TodoActions = {type: 'TODO_LIST'; payload: any};
 
 interface TodoState {
-    todoList: any;
-};
+  todoList: any;
+}
 
 const todoInitialSate: TodoState = {
-    todoList: [],
+  todoList: [],
 };
 
-export const TodoReducer = (state = todoInitialSate, action: TodoActions): TodoState => {
+export const TodoReducer = (
+  state = todoInitialSate,
+  action: TodoActions,
+): TodoState => {
+  switch (action.type) {
+    case 'TODO_LIST':
+      return {
+        ...state,
+        todoList: action.payload,
+      };
 
-    switch (action.type) {
-        case 'TODO_LIST':
-            return {
-                ...state,
-                todoList: action.payload
-            };
-
-        default:
-            return state;
-    };
+    default:
+      return state;
+  }
 };
